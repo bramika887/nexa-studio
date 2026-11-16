@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXA STUDIO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:22px;background:#090d19;color:white;font-family:Arial,sans-serif}
+header{font-size:26px;font-weight:bold;margin:12px 0 28px}
+header span{color:#927cff}
+.hero{padding:23px;background:linear-gradient(135deg,#29205b,#171d3b);border-radius:20px;margin-bottom:22px}
+.hero h2{margin:0 0 9px}
+.hero p{color:#c5c3e5;font-size:14px;line-height:1.6}
+.card{background:#151c2e;padding:20px;border:1px solid #29334b;border-radius:17px;margin-bottom:18px}
+label{display:block;margin-top:17px;font-size:14px;color:#dce1f3}
+input,textarea,select{width:100%;padding:14px;margin-top:9px;border:1px solid #34405b;border-radius:11px;background:#0b1120;color:white;font-size:15px}
+textarea{resize:vertical;min-height:85px}
+button{padding:14px;border:0;border-radius:11px;background:#8069ff;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+.mainbtn{width:100%;margin-top:19px}
+.secondary{background:#29344d;margin-top:12px;width:100%}
+#hasil{white-space:pre-wrap;line-height:1.7;color:#e1e5f3;margin-top:15px}
+.history-item{padding:12px;background:#0d1425;border-radius:10px;margin-top:10px;font-size:13px;color:#cbd4ea;white-space:pre-wrap}
+.small{font-size:12px;color:#8794ae}
+</style>
+</head>
+<body>
+
+<header>NEXA <span>STUDIO.</span></header>
+
+<div class="hero">
+<h2>Content Creator Studio</h2>
+<p>Buat konten promosi produk dengan lebih mudah, cepat, dan praktis.</p>
+</div>
+
+<div class="card">
+<h3>Buat konten baru</h3>
+
+<label>Nama produk</label>
+<input id="produk" placeholder="Contoh: Sepatu sneakers">
+
+<label>Jenis konten</label>
+<select id="jenis">
+<option>Caption jualan</option>
+<option>Deskripsi produk</option>
+<option>Ide konten TikTok</option>
+<option>Kata-kata promosi</option>
+</select>
+
+<label>Gaya bahasa</label>
+<select id="gaya">
+<option value="santai">Santai</option>
+<option value="profesional">Profesional</option>
+<option value="persuasif">Persuasif</option>
+</select>
+
+<button class="mainbtn" onclick="buatKonten()">BUAT KONTEN ✨</button>
+
+<div id="hasil"></div>
+<button id="salin" class="secondary" hidden onclick="salinKonten()">SALIN HASIL</button>
+</div>
+
+<div class="card">
+<h3>Riwayat konten</h3>
+<div id="riwayat" class="small">Belum ada riwayat.</div>
+</div>
+
+<script>
+let kontenTerakhir="";
+
+function buatKonten(){
+const produk=document.getElementById("produk").value.trim();
+const jenis=document.getElementById("jenis").value;
+const gaya=document.getElementById("gaya").value;
+const hasil=document.getElementById("hasil");
+
+if(!produk){
+hasil.textContent="Masukkan nama produk terlebih dahulu.";
+return;
+}
+
+let teks="";
+
+if(jenis==="Caption jualan"){
+if(gaya==="santai"){
+teks=`Lagi cari ${produk}? 👀\n\nYuk, cek produk ini! Cocok buat kamu yang ingin pilihan menarik dengan harga bersahabat.\n\nYuk, pesan sekarang!`;
+}else if(gaya==="profesional"){
+teks=`Perkenalkan ${produk}, pilihan menarik untuk kebutuhan Anda.\n\nTemukan informasi produk dan penawaran yang sesuai dengan kebutuhan Anda.\n\nHubungi kami untuk informasi lebih lanjut.`;
+}else{
+teks=`Jangan lewatkan ${produk}! ✨\n\nSaatnya menemukan produk yang sesuai dengan kebutuhanmu.\n\nTertarik? Hubungi kami sekarang dan dapatkan informasi penawarannya!`;
+}
+}else if(jenis==="Deskripsi produk"){
+teks=`${produk}\n\nProduk yang dapat menjadi pilihan untuk kebutuhan sehari-hari.\n\nHubungi penjual untuk mengetahui detail, spesifikasi, dan harga produk.`;
+}else if(jenis==="Ide konten TikTok"){
+teks=`Ide video TikTok: ${produk}\n\n1. Tampilkan produk dari dekat.\n2. Ceritakan kegunaan produk.\n3. Tunjukkan cara penggunaannya.\n4. Tutup dengan ajakan melihat katalog.\n\nGunakan video singkat dan menarik!`;
+}else{
+teks=`✨ PROMOSI ${produk.toUpperCase()} ✨\n\nTemukan pilihan produk yang menarik untuk kebutuhanmu.\n\nInformasi harga dan pemesanan bisa langsung ditanyakan kepada penjual!`;
+}
+
+kontenTerakhir=teks;
+hasil.textContent=teks;
+document.getElementById("salin").hidden=false;
+
+let data=JSON.parse(localStorage.getItem("nexaHistory")||"[]");
+data.unshift(teks);
+data=data.slice(0,5);
+localStorage.setItem("nexaHistory",JSON.stringify(data));
+tampilkanRiwayat();
+}
+
+async function salinKonten(){
+if(!kontenTerakhir)return;
+try{
+await navigator.clipboard.writeText(kontenTerakhir);
+document.getElementById("salin").textContent="BERHASIL DISALIN ✓";
+}catch(e){
+document.getElementById("salin").textContent="Gagal menyalin. Salin manual.";
+}
+}
+
+function tampilkanRiwayat(){
+const data=JSON.parse(localStorage.getItem("nexaHistory")||"[]");
+document.getElementById("riwayat").innerHTML="";
+if(!data.length){
+document.getElementById("riwayat").textContent="Belum ada riwayat.";
+return;
+}
+data.forEach(teks=>{
+const item=document.createElement("div");
+item.className="history-item";
+item.textContent=teks;
+document.getElementById("riwayat").appendChild(item);
+});
+}
+
+tampilkanRiwayat();
+</script>
+
+</body>
+</html>
+
+
+
+
