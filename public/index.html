@@ -1,145 +1,207 @@
-
+cat > public/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d19">
 <title>NEXA STUDIO</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:22px;background:#090d19;color:white;font-family:Arial,sans-serif}
-header{font-size:26px;font-weight:bold;margin:12px 0 28px}
-header span{color:#927cff}
-.hero{padding:23px;background:linear-gradient(135deg,#29205b,#171d3b);border-radius:20px;margin-bottom:22px}
-.hero h2{margin:0 0 9px}
-.hero p{color:#c5c3e5;font-size:14px;line-height:1.6}
-.card{background:#151c2e;padding:20px;border:1px solid #29334b;border-radius:17px;margin-bottom:18px}
-label{display:block;margin-top:17px;font-size:14px;color:#dce1f3}
-input,textarea,select{width:100%;padding:14px;margin-top:9px;border:1px solid #34405b;border-radius:11px;background:#0b1120;color:white;font-size:15px}
-textarea{resize:vertical;min-height:85px}
-button{padding:14px;border:0;border-radius:11px;background:#8069ff;color:white;font-weight:bold;font-size:15px;cursor:pointer}
-.mainbtn{width:100%;margin-top:19px}
-.secondary{background:#29344d;margin-top:12px;width:100%}
-#hasil{white-space:pre-wrap;line-height:1.7;color:#e1e5f3;margin-top:15px}
-.history-item{padding:12px;background:#0d1425;border-radius:10px;margin-top:10px;font-size:13px;color:#cbd4ea;white-space:pre-wrap}
-.small{font-size:12px;color:#8794ae}
+body{margin:0;background:#090d19;color:#f5f6ff;font-family:Arial,sans-serif;padding:20px}
+header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 25px}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
+.logo span{color:#9b83ff}
+.version{font-size:11px;color:#a99aff;background:#211b40;padding:8px 12px;border-radius:20px}
+.hero{padding:25px 21px;border-radius:22px;background:linear-gradient(135deg,#4934a1,#171d3d);margin-bottom:22px}
+.hero small{color:#c8bcff;font-weight:bold}
+.hero h1{font-size:27px;margin:12px 0}
+.hero p{font-size:13px;line-height:1.6;color:#d6d2f3}
+.card{background:#151c2e;border:1px solid #29334b;border-radius:19px;padding:19px;margin-bottom:17px}
+h3{margin:0 0 8px;font-size:17px}
+.desc{font-size:12px;color:#8997b5;margin-bottom:17px}
+label{display:block;font-size:13px;color:#dce1f3;margin:16px 0 8px}
+input,select{width:100%;padding:14px;background:#0b1120;border:1px solid #34405b;border-radius:11px;color:white;font-size:14px}
+button{border:0;border-radius:11px;padding:14px;font-size:14px;font-weight:bold;color:white;background:#8069ff}
+button:active{opacity:.8}
+.mainbtn{width:100%;margin-top:20px}
+.result{white-space:pre-wrap;line-height:1.7;font-size:14px;color:#e4e7f5;background:#0b1120;padding:15px;border-radius:12px;margin-top:15px}
+.secondary{background:#29344d;width:100%;margin-top:10px}
+.history-item{padding:13px;background:#0b1120;border-radius:11px;margin-top:10px;font-size:13px;line-height:1.5;color:#dce1f3;white-space:pre-wrap}
+.history-head{display:flex;justify-content:space-between;align-items:center}
+.clear{background:transparent;color:#a99aff;padding:5px;font-size:12px}
+footer{text-align:center;color:#68748d;font-size:11px;padding:15px}
+.hidden{display:none}
 </style>
 </head>
 <body>
 
-<header>NEXA <span>STUDIO.</span></header>
+<header>
+ <div class="logo">NEXA <span>STUDIO.</span></div>
+ <div class="version">VERSION 3.0</div>
+</header>
 
-<div class="hero">
-<h2>Content Creator Studio</h2>
-<p>Buat konten promosi produk dengan lebih mudah, cepat, dan praktis.</p>
-</div>
+<section class="hero">
+ <small>YOUR CREATIVE BUSINESS ASSISTANT</small>
+ <h1>Ide jualan jadi lebih mudah.</h1>
+ <p>Buat caption, deskripsi produk, dan ide konten promosi dalam beberapa detik.</p>
+</section>
 
-<div class="card">
-<h3>Buat konten baru</h3>
+<section class="card">
+ <h3>✨ Content Generator</h3>
+ <div class="desc">Lengkapi informasi produkmu.</div>
 
-<label>Nama produk</label>
-<input id="produk" placeholder="Contoh: Sepatu sneakers">
+ <label>Nama produk</label>
+ <input id="produk" placeholder="Contoh: Sepatu sneakers">
 
-<label>Jenis konten</label>
-<select id="jenis">
-<option>Caption jualan</option>
-<option>Deskripsi produk</option>
-<option>Ide konten TikTok</option>
-<option>Kata-kata promosi</option>
-</select>
+ <label>Target pembeli</label>
+ <select id="target">
+  <option>Semua kalangan</option>
+  <option>Remaja</option>
+  <option>Mahasiswa</option>
+  <option>Pekerja</option>
+  <option>Keluarga</option>
+ </select>
 
-<label>Gaya bahasa</label>
-<select id="gaya">
-<option value="santai">Santai</option>
-<option value="profesional">Profesional</option>
-<option value="persuasif">Persuasif</option>
-</select>
+ <label>Jenis konten</label>
+ <select id="jenis">
+  <option>Caption jualan</option>
+  <option>Deskripsi produk</option>
+  <option>Ide konten TikTok</option>
+  <option>Kata-kata promosi</option>
+ </select>
 
-<button class="mainbtn" onclick="buatKonten()">BUAT KONTEN ✨</button>
+ <label>Gaya bahasa</label>
+ <select id="gaya">
+  <option value="santai">Santai dan menarik</option>
+  <option value="profesional">Profesional</option>
+  <option value="persuasif">Persuasif</option>
+ </select>
 
-<div id="hasil"></div>
-<button id="salin" class="secondary" hidden onclick="salinKonten()">SALIN HASIL</button>
-</div>
+ <label>Ajakan tambahan (opsional)</label>
+ <input id="cta" placeholder="Contoh: Hubungi kami sekarang">
 
-<div class="card">
-<h3>Riwayat konten</h3>
-<div id="riwayat" class="small">Belum ada riwayat.</div>
-</div>
+ <button class="mainbtn" onclick="buatKonten()">GENERATE CONTENT ✨</button>
+</section>
+
+<section class="card hidden" id="hasilCard">
+ <h3>Hasil konten kamu</h3>
+ <div class="desc">Pilih variasi yang paling cocok.</div>
+ <div id="hasil"></div>
+ <button class="secondary" onclick="salinKonten()">SALIN HASIL</button>
+</section>
+
+<section class="card">
+ <div class="history-head">
+  <h3>Riwayat konten</h3>
+  <button class="clear" onclick="hapusRiwayat()">Hapus semua</button>
+ </div>
+ <div id="riwayat" class="desc">Belum ada riwayat.</div>
+</section>
+
+<footer>NEXA STUDIO © 2026 · Create something great.</footer>
 
 <script>
 let kontenTerakhir="";
 
 function buatKonten(){
-const produk=document.getElementById("produk").value.trim();
-const jenis=document.getElementById("jenis").value;
-const gaya=document.getElementById("gaya").value;
-const hasil=document.getElementById("hasil");
+ const produk=document.getElementById("produk").value.trim();
+ const target=document.getElementById("target").value;
+ const jenis=document.getElementById("jenis").value;
+ const gaya=document.getElementById("gaya").value;
+ const cta=document.getElementById("cta").value.trim() || "Hubungi kami untuk informasi lebih lanjut!";
+ if(!produk){alert("Masukkan nama produk terlebih dahulu.");return;}
 
-if(!produk){
-hasil.textContent="Masukkan nama produk terlebih dahulu.";
-return;
-}
+ let variasi=[];
+ if(jenis==="Caption jualan"){
+  if(gaya==="santai"){
+   variasi=[
+    `Lagi cari ${produk}? 👀\n\nYuk kenalan dengan produk yang cocok untuk ${target.toLowerCase()}!\n\n${cta}`,
+    `Ada yang baru nih! ✨\n\nKenali ${produk}, pilihan menarik yang patut kamu cek.\n\n${cta}`,
+    `Saatnya upgrade pilihanmu!\n\n${produk} siap jadi salah satu pilihan menarik buat kamu.\n\n${cta}`
+   ];
+  }else if(gaya==="profesional"){
+   variasi=[
+    `Perkenalkan ${produk}.\n\nPilihan produk untuk memenuhi kebutuhan ${target.toLowerCase()}.\n\n${cta}`,
+    `${produk} hadir dengan penawaran yang menarik.\n\nHubungi kami untuk mengetahui detail produk dan informasi pemesanan.\n\n${cta}`,
+    `Temukan informasi mengenai ${produk}.\n\nKami siap membantu Anda mendapatkan informasi yang dibutuhkan.\n\n${cta}`
+   ];
+  }else{
+   variasi=[
+    `Jangan lewatkan ${produk}! 🔥\n\nCari tahu kenapa produk ini layak masuk daftar pilihanmu.\n\n${cta}`,
+    `Punya kebutuhan? Kenali ${produk} lebih dekat!\n\nDapatkan informasi produknya sekarang.\n\n${cta}`,
+    `Pilihan menarik ada di depan mata!\n\nYuk, cek ${produk} dan temukan detailnya.\n\n${cta}`
+   ];
+  }
+ }else if(jenis==="Deskripsi produk"){
+  variasi=[
+   `${produk}\n\nProduk pilihan untuk kebutuhan ${target.toLowerCase()}.\n\nHubungi penjual untuk informasi harga, spesifikasi, dan ketersediaan.\n\n${cta}`,
+   `Kenali ${produk} lebih dekat.\n\nTemukan informasi lengkap mengenai fitur dan manfaat produk sebelum membeli.\n\n${cta}`,
+   `${produk} - pilihan yang bisa kamu pertimbangkan.\n\nTanyakan detail produk kepada penjual untuk mendapatkan informasi lebih lanjut.\n\n${cta}`
+  ];
+ }else if(jenis==="Ide konten TikTok"){
+  variasi=[
+   `IDE VIDEO: ${produk}\n\n1. Tampilkan produk dari dekat.\n2. Perlihatkan detail produk.\n3. Jelaskan kegunaannya.\n4. Tutup dengan ajakan melihat katalog.\n\nTarget: ${target}\n${cta}`,
+   `KONSEP REVIEW ${produk}\n\n1. Pembukaan yang menarik.\n2. Perkenalkan produk.\n3. Tampilkan detailnya.\n4. Berikan informasi pemesanan.\n\n${cta}`,
+   `KONSEP VIDEO: ${produk}\n\n1. Buat video unboxing.\n2. Tunjukkan bagian menarik.\n3. Berikan kesan penggunaan secara jujur.\n4. Ajak penonton mencari tahu lebih lanjut.\n\n${cta}`
+  ];
+ }else{
+  variasi=[
+   `✨ PROMOSI ${produk.toUpperCase()} ✨\n\nPilihan menarik untuk ${target.toLowerCase()}!\n\nYuk, cari tahu informasi lengkapnya.\n\n${cta}`,
+   `HALO, ADA PRODUK MENARIK!\n\nKenali ${produk} dan temukan detail yang kamu butuhkan.\n\n${cta}`,
+   `JANGAN SAMPAI KETINGGALAN!\n\nCari tahu lebih banyak tentang ${produk} sekarang.\n\n${cta}`
+  ];
+ }
 
-let teks="";
+ const wadah=document.getElementById("hasil");
+ wadah.innerHTML="";
+ variasi.forEach((teks,i)=>{
+  const box=document.createElement("div");
+  box.className="result";
+  box.textContent="VARIASI "+(i+1)+"\n\n"+teks;
+  wadah.appendChild(box);
+ });
+ kontenTerakhir=variasi.join("\n\n----------------\n\n");
+ document.getElementById("hasilCard").classList.remove("hidden");
 
-if(jenis==="Caption jualan"){
-if(gaya==="santai"){
-teks=`Lagi cari ${produk}? 👀\n\nYuk, cek produk ini! Cocok buat kamu yang ingin pilihan menarik dengan harga bersahabat.\n\nYuk, pesan sekarang!`;
-}else if(gaya==="profesional"){
-teks=`Perkenalkan ${produk}, pilihan menarik untuk kebutuhan Anda.\n\nTemukan informasi produk dan penawaran yang sesuai dengan kebutuhan Anda.\n\nHubungi kami untuk informasi lebih lanjut.`;
-}else{
-teks=`Jangan lewatkan ${produk}! ✨\n\nSaatnya menemukan produk yang sesuai dengan kebutuhanmu.\n\nTertarik? Hubungi kami sekarang dan dapatkan informasi penawarannya!`;
-}
-}else if(jenis==="Deskripsi produk"){
-teks=`${produk}\n\nProduk yang dapat menjadi pilihan untuk kebutuhan sehari-hari.\n\nHubungi penjual untuk mengetahui detail, spesifikasi, dan harga produk.`;
-}else if(jenis==="Ide konten TikTok"){
-teks=`Ide video TikTok: ${produk}\n\n1. Tampilkan produk dari dekat.\n2. Ceritakan kegunaan produk.\n3. Tunjukkan cara penggunaannya.\n4. Tutup dengan ajakan melihat katalog.\n\nGunakan video singkat dan menarik!`;
-}else{
-teks=`✨ PROMOSI ${produk.toUpperCase()} ✨\n\nTemukan pilihan produk yang menarik untuk kebutuhanmu.\n\nInformasi harga dan pemesanan bisa langsung ditanyakan kepada penjual!`;
-}
-
-kontenTerakhir=teks;
-hasil.textContent=teks;
-document.getElementById("salin").hidden=false;
-
-let data=JSON.parse(localStorage.getItem("nexaHistory")||"[]");
-data.unshift(teks);
-data=data.slice(0,5);
-localStorage.setItem("nexaHistory",JSON.stringify(data));
-tampilkanRiwayat();
+ let data=JSON.parse(localStorage.getItem("nexaHistory")||"[]");
+ data.unshift(variasi[0]);
+ localStorage.setItem("nexaHistory",JSON.stringify(data.slice(0,10)));
+ tampilkanRiwayat();
 }
 
 async function salinKonten(){
-if(!kontenTerakhir)return;
-try{
-await navigator.clipboard.writeText(kontenTerakhir);
-document.getElementById("salin").textContent="BERHASIL DISALIN ✓";
-}catch(e){
-document.getElementById("salin").textContent="Gagal menyalin. Salin manual.";
-}
+ if(!kontenTerakhir)return;
+ try{
+  await navigator.clipboard.writeText(kontenTerakhir);
+  alert("Berhasil disalin!");
+ }catch(e){
+  alert("Fitur salin tidak tersedia. Silakan salin teks secara manual.");
+ }
 }
 
 function tampilkanRiwayat(){
-const data=JSON.parse(localStorage.getItem("nexaHistory")||"[]");
-document.getElementById("riwayat").innerHTML="";
-if(!data.length){
-document.getElementById("riwayat").textContent="Belum ada riwayat.";
-return;
-}
-data.forEach(teks=>{
-const item=document.createElement("div");
-item.className="history-item";
-item.textContent=teks;
-document.getElementById("riwayat").appendChild(item);
-});
+ const wadah=document.getElementById("riwayat");
+ const data=JSON.parse(localStorage.getItem("nexaHistory")||"[]");
+ wadah.innerHTML="";
+ if(!data.length){wadah.textContent="Belum ada riwayat.";return;}
+ data.forEach((teks,i)=>{
+  const item=document.createElement("div");
+  item.className="history-item";
+  item.textContent=(i+1)+". "+teks;
+  wadah.appendChild(item);
+ });
 }
 
+function hapusRiwayat(){
+ if(confirm("Hapus semua riwayat konten?")){
+  localStorage.removeItem("nexaHistory");
+  tampilkanRiwayat();
+ }
+}
 tampilkanRiwayat();
 </script>
-
 </body>
 </html>
-
-
-
+EOF
 
